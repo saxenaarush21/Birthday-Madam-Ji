@@ -1,0 +1,440 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+/* --------------------------------------------- */
+.disable{
+    display: none;
+}
+/* --------------------------------------------- */
+@keyframes in-an{
+    0%{
+        transform: translateY(30px);
+        opacity: 0;
+        filter: blur(5px);
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 100;
+        filter: blur(0px);
+    }
+}
+/* --------------------------------------------- */
+body{
+    background: #FFF1E6;
+    overflow-x: hidden;
+}
+.box1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box1 h1{
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-size: 3rem;
+    animation: in-an 1s ease-out;
+}
+.box1 img{
+    width: 200px;
+    animation: in-an 1s ease-out 0.5s both;
+}
+.box1 h2{
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-size: 1rem;
+    margin-top: 50px;
+    animation: in-an 1s ease-out 1s both;
+}
+.box1 input{
+    background-color: #C41E3A;
+    border: black solid 1px;
+    width: 100px;
+    height: 50px;
+    margin-top: 30px;
+    color: wheat;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    animation: in-an 1s ease-out 1.5s both;
+}
+
+.box2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.txtbox img{
+    width: 251px;
+    animation: in-an 1s ease-out;
+}
+.cakebox img{
+    width: 350px;
+    animation: in-an 1s ease-out 0.5s both;
+}
+.para1{
+    width: 75%;
+    animation: in-an 1s ease-out 1s both;   
+}
+
+.btn1{
+    background-color: #C41E3A;
+    border: black solid 1px;
+    width: 150px;
+    height: 50px;
+    margin-top: 30px;
+    color: wheat;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    animation: in-an 1s ease-out 1.5s both;
+}
+
+@media (max-width: 768px) {
+    .box1 h1{
+        font-size: 2rem;
+        font-weight: 400;
+    }
+    .box1 img{
+        width: 150px;
+    }
+
+    .txtbox img{
+        width: 200px;
+        animation: in-an 1s ease-out;
+    }
+    .cakebox img{
+        width: 250px;
+        animation: in-an 1s ease-out 0.5s both;
+    }
+}
+@media (max-width: 480px) {
+    .box1 h1{
+        font-size: 1.3rem;
+        font-weight: 400;
+    }
+    .box1 h2{
+        font-size: 0.9rem;
+    }
+    .box1 input{
+        width: 80px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+
+    .txtbox img{
+        width: 130px;
+        animation: in-an 1s ease-out;
+    }
+    .cakebox img{
+        width: 170px;
+        animation: in-an 1s ease-out 0.5s both;
+    }
+    .para1{
+        width: 85%;
+        font-size: 0.9rem;
+        animation: in-an 1s ease-out 1s both;   
+    }
+
+    .box2 input{
+        width: 120px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* -------------------------------------------------- */
+
+.box3{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box3 img{
+    animation: in-an 1s ease-out;
+}
+.box3 h1{
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-size: 1.5rem;
+    margin-top: 50px;
+    animation: in-an 1s ease-out .5s both;
+}
+
+.btn2{
+    background-color: #C41E3A;
+    border: black solid 1px;
+    width: 150px;
+    height: 50px;
+    margin-top: 30px;
+    color: wheat;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    animation: in-an 1s ease-out 1s both;
+}
+
+@media (max-width:768px) {
+    .box3 img{
+        width: 150px;
+    }
+    .box3 h1{
+        font-size: 1.1rem;
+        font-weight: 450;
+    }
+    .box3 input{
+        width: 120px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+}
+@media (max-width:480px) {
+    .box3 img{
+        width: 150px;
+    }
+    .box3 h1{
+        font-size: 0.84rem;
+        font-weight: 300;
+    }
+    .box3 input{
+        width: 100px;
+        height: 30px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ------------------------------------ */
+.box5{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box4{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.txtbox-ltr{
+    text-align: left;
+    width: 70vw;
+    margin-top: 50px;
+}
+.box4 h1{
+    font-size: 2.5rem;
+    font-weight: 600;
+    animation: in-an 1s ease-out;
+}
+.box4 p{
+    margin-top: 30px;
+    font-size: 1.5rem;
+    animation: in-an 1s ease-out 0.5s both;
+}
+.btn3{
+    background-color: #C41E3A;
+    border: black solid 1px;
+    width: 150px;
+    height: 50px;
+    margin-top: 30px;
+    color: wheat;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    animation: in-an 1s ease-out 1s both;
+    margin-bottom: 100px;
+}
+
+@media (max-width: 768px) {
+    .box4 h1{
+        font-size: 2rem;
+    }
+    .box4 p{
+        font-size: 1rem;
+    }
+    .box4 input{
+        width: 120px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ------------------------------------------- */
+.cont-box{
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    padding: 20px;
+}
+.cont{
+    position: absolute;
+    background: white;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,.1);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    transition: transform .15s;
+}
+.cont div{
+    padding: 25px;
+}
+.cont img{
+    width: 150px;
+    pointer-events: none;
+}
+.cont:active{
+    cursor: grabbing;
+}
+.cont p{
+    font-size: 0.8rem;
+    font-family: sans-serif;
+}
+.cont:nth-child(1){
+    top: 200px;
+    left: 10%;
+    animation: in-an 1s ease-out 0.5s both;
+}
+.cont:nth-child(2){
+    top: 200px;
+    left: 30%;
+    animation: in-an 1s ease-out 1s both;
+}
+.cont:nth-child(3){
+    top: 200px;
+    left: 50%;
+    animation: in-an 1s ease-out 1.5s both;
+}
+.cont:nth-child(4){
+    top: 200px;
+    left: 70%;
+    animation: in-an 1s ease-out 2s both;
+}
+.mem-box{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.mem-box img{
+    width: 300px;
+    animation: in-an 1s ease-out;
+}
+
+@media (max-width: 1040px) {
+    .cont:nth-child(1){
+        top: 200px;
+        left: 25%;
+    }
+    .cont:nth-child(2){
+        top: 500px;
+        left: 25%;
+    }
+    .cont:nth-child(3){
+        top: 500px;
+        left: 50%;
+    }
+    .cont:nth-child(4){
+        top: 200px;
+        left: 50%;
+    }
+}
+@media (max-width: 870px) {
+    .cont:nth-child(1){
+        top: 200px;
+        left: 15%;
+    }
+    .cont:nth-child(2){
+        top: 500px;
+        left: 15%;
+    }
+    .cont:nth-child(3){
+        top: 500px;
+        left: 50%;
+    }
+    .cont:nth-child(4){
+        top: 200px;
+        left: 50%;
+    }
+}
+@media (max-width: 600px) {
+    .cont{
+        transform: scale(0.9);
+    }
+    .cont:nth-child(1){
+        top: 200px;
+        left: 10%;
+    }
+    .cont:nth-child(2){
+        top: 500px;
+        left: 10%;
+    }
+    .cont:nth-child(3){
+        top: 500px;
+        left: 50%;
+    }
+    .cont:nth-child(4){
+        top: 200px;
+        left: 50%;
+    }
+}
+@media (max-width: 480px) {
+    .cont{
+        transform: scale(0.8);
+    }
+    .cont:nth-child(1){
+        top: 144px;
+        left: 10%;
+    }
+    .cont:nth-child(2){
+        top: 360px;
+        left: 10%;
+    }
+    .cont:nth-child(3){
+        top: 250px;
+        left: 35%;
+    }
+    .cont:nth-child(4){
+        top: 472px;
+        left: 35%;
+    }
+}
