@@ -313,6 +313,7 @@ body{
     box-shadow: 0 2px 15px rgba(0,0,0,.1);
     cursor: grab;
     touch-action: none;
+    transform-origin: center;
     user-select: none;
     transition: transform .15s;
 }
