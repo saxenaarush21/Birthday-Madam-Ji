@@ -13,7 +13,11 @@ photos.forEach(photo => {
     let initialTop = 0;
 
     let initialDistance = 0;
-    let initialWidth = photo.offsetWidth;
+    let currentScale = 1;
+    let initialScale = 1;
+
+    photo.style.cursor = "grab";
+    photo.style.touchAction = "none";
 
     photo.addEventListener("pointerdown", pointerDown);
     photo.addEventListener("pointermove", pointerMove);
@@ -34,7 +38,7 @@ photos.forEach(photo => {
             y:e.clientY
         });
 
-        // Drag
+        // One finger / Mouse
         if(pointers.size === 1){
 
             startX = e.clientX;
@@ -47,7 +51,7 @@ photos.forEach(photo => {
 
         }
 
-        // Pinch start
+        // Two fingers
         if(pointers.size === 2){
 
             const pts = [...pointers.values()];
@@ -57,7 +61,7 @@ photos.forEach(photo => {
                 pts[0].y - pts[1].y
             );
 
-            initialWidth = photo.offsetWidth;
+            initialScale = currentScale;
 
         }
 
@@ -72,7 +76,8 @@ photos.forEach(photo => {
             y:e.clientY
         });
 
-        // Drag with one finger
+        // -------- Drag --------
+
         if(pointers.size === 1){
 
             const dx = e.clientX - startX;
@@ -81,9 +86,12 @@ photos.forEach(photo => {
             photo.style.left = initialLeft + dx + "px";
             photo.style.top = initialTop + dy + "px";
 
+            photo.style.transform = `scale(${currentScale * 1.05})`;
+
         }
 
-        // Resize with two fingers
+        // -------- Pinch --------
+
         if(pointers.size === 2){
 
             const pts = [...pointers.values()];
@@ -93,12 +101,11 @@ photos.forEach(photo => {
                 pts[0].y - pts[1].y
             );
 
-            let newWidth = initialWidth * (distance / initialDistance);
+            currentScale = initialScale * (distance / initialDistance);
 
-            // Minimum and maximum size
-            newWidth = Math.max(120, Math.min(newWidth, 350));
+            currentScale = Math.max(0.5, Math.min(currentScale, 3));
 
-            photo.style.width = newWidth + "px";
+            photo.style.transform = `scale(${currentScale})`;
 
         }
 
@@ -108,11 +115,14 @@ photos.forEach(photo => {
 
         pointers.delete(e.pointerId);
 
-        photo.releasePointerCapture(e.pointerId);
+        if(photo.hasPointerCapture(e.pointerId)){
+            photo.releasePointerCapture(e.pointerId);
+        }
 
         if(pointers.size === 0){
 
             photo.style.cursor = "grab";
+            photo.style.transform = `scale(${currentScale})`;
 
         }
 
