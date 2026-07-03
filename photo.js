@@ -4,58 +4,117 @@ let highestZ = 1;
 
 photos.forEach(photo => {
 
-    // photo.style.left = photo.offsetLeft + "px";
-    // photo.style.top = photo.offsetTop + "px";
+    let pointers = new Map();
 
-    // photo.style.position = "absolute";
+    let startX = 0;
+    let startY = 0;
 
-    let startX, startY;
-    let initialLeft, initialTop;
+    let initialLeft = 0;
+    let initialTop = 0;
 
-    photo.addEventListener("pointerdown", startDrag);
+    let initialDistance = 0;
+    let initialWidth = photo.offsetWidth;
 
-    function startDrag(e){
+    photo.addEventListener("pointerdown", pointerDown);
+    photo.addEventListener("pointermove", pointerMove);
+    photo.addEventListener("pointerup", pointerUp);
+    photo.addEventListener("pointercancel", pointerUp);
+
+    function pointerDown(e){
 
         e.preventDefault();
+
+        photo.setPointerCapture(e.pointerId);
 
         highestZ++;
         photo.style.zIndex = highestZ;
 
-        startX = e.clientX;
-        startY = e.clientY;
+        pointers.set(e.pointerId,{
+            x:e.clientX,
+            y:e.clientY
+        });
 
-        // initialLeft = photo.offsetLeft;
-        // initialTop = photo.offsetTop;
-        initialLeft = parseFloat(getComputedStyle(photo).left);
-        initialTop = parseFloat(getComputedStyle(photo).top);
+        // Drag
+        if(pointers.size === 1){
 
-        photo.style.cursor = "grabbing";
-        photo.style.transition = "none";
-        photo.style.scale = "1.05";
+            startX = e.clientX;
+            startY = e.clientY;
 
-        document.addEventListener("pointermove", drag);
-        document.addEventListener("pointerup", stopDrag);
+            initialLeft = parseFloat(getComputedStyle(photo).left);
+            initialTop = parseFloat(getComputedStyle(photo).top);
+
+            photo.style.cursor = "grabbing";
+
+        }
+
+        // Pinch start
+        if(pointers.size === 2){
+
+            const pts = [...pointers.values()];
+
+            initialDistance = Math.hypot(
+                pts[0].x - pts[1].x,
+                pts[0].y - pts[1].y
+            );
+
+            initialWidth = photo.offsetWidth;
+
+        }
 
     }
 
-    function drag(e){
+    function pointerMove(e){
 
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
+        if(!pointers.has(e.pointerId)) return;
 
-        photo.style.left = initialLeft + dx + "px";
-        photo.style.top = initialTop + dy + "px";
+        pointers.set(e.pointerId,{
+            x:e.clientX,
+            y:e.clientY
+        });
+
+        // Drag with one finger
+        if(pointers.size === 1){
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            photo.style.left = initialLeft + dx + "px";
+            photo.style.top = initialTop + dy + "px";
+
+        }
+
+        // Resize with two fingers
+        if(pointers.size === 2){
+
+            const pts = [...pointers.values()];
+
+            const distance = Math.hypot(
+                pts[0].x - pts[1].x,
+                pts[0].y - pts[1].y
+            );
+
+            let newWidth = initialWidth * (distance / initialDistance);
+
+            // Minimum and maximum size
+            newWidth = Math.max(120, Math.min(newWidth, 350));
+
+            photo.style.width = newWidth + "px";
+
+        }
 
     }
 
-    function stopDrag(){
+    function pointerUp(e){
 
-        photo.style.cursor = "grab";
-        photo.style.scale = "1";
-        photo.style.transition = "scale .2s";
+        pointers.delete(e.pointerId);
 
-        document.removeEventListener("pointermove", drag);
-        document.removeEventListener("pointerup", stopDrag);
+        photo.releasePointerCapture(e.pointerId);
+
+        if(pointers.size === 0){
+
+            photo.style.cursor = "grab";
+
+        }
 
     }
 
