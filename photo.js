@@ -4,127 +4,58 @@ let highestZ = 1;
 
 photos.forEach(photo => {
 
-    let pointers = new Map();
+    // photo.style.left = photo.offsetLeft + "px";
+    // photo.style.top = photo.offsetTop + "px";
 
-    let startX = 0;
-    let startY = 0;
+    // photo.style.position = "absolute";
 
-    let initialLeft = 0;
-    let initialTop = 0;
+    let startX, startY;
+    let initialLeft, initialTop;
 
-    let initialDistance = 0;
-    let currentScale = 1;
-    let initialScale = 1;
+    photo.addEventListener("pointerdown", startDrag);
 
-    photo.style.cursor = "grab";
-    photo.style.touchAction = "none";
-
-    photo.addEventListener("pointerdown", pointerDown);
-    photo.addEventListener("pointermove", pointerMove);
-    photo.addEventListener("pointerup", pointerUp);
-    photo.addEventListener("pointercancel", pointerUp);
-
-    function pointerDown(e){
+    function startDrag(e){
 
         e.preventDefault();
-
-        photo.setPointerCapture(e.pointerId);
 
         highestZ++;
         photo.style.zIndex = highestZ;
 
-        pointers.set(e.pointerId,{
-            x:e.clientX,
-            y:e.clientY
-        });
+        startX = e.clientX;
+        startY = e.clientY;
 
-        // One finger / Mouse
-        if(pointers.size === 1){
+        // initialLeft = photo.offsetLeft;
+        // initialTop = photo.offsetTop;
+        initialLeft = parseFloat(getComputedStyle(photo).left);
+        initialTop = parseFloat(getComputedStyle(photo).top);
 
-            startX = e.clientX;
-            startY = e.clientY;
+        photo.style.cursor = "grabbing";
+        photo.style.transition = "none";
+        photo.style.scale = "1.05";
 
-            initialLeft = parseFloat(getComputedStyle(photo).left);
-            initialTop = parseFloat(getComputedStyle(photo).top);
-
-            photo.style.cursor = "grabbing";
-
-        }
-
-        // Two fingers
-        if(pointers.size === 2){
-
-            const pts = [...pointers.values()];
-
-            initialDistance = Math.hypot(
-                pts[0].x - pts[1].x,
-                pts[0].y - pts[1].y
-            );
-
-            initialScale = currentScale;
-
-        }
+        document.addEventListener("pointermove", drag);
+        document.addEventListener("pointerup", stopDrag);
 
     }
 
-    function pointerMove(e){
+    function drag(e){
 
-        if(!pointers.has(e.pointerId)) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
 
-        pointers.set(e.pointerId,{
-            x:e.clientX,
-            y:e.clientY
-        });
-
-        // -------- Drag --------
-
-        if(pointers.size === 1){
-
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-
-            photo.style.left = initialLeft + dx + "px";
-            photo.style.top = initialTop + dy + "px";
-
-            photo.style.transform = `scale(${currentScale * 1.05})`;
-
-        }
-
-        // -------- Pinch --------
-
-        if(pointers.size === 2){
-
-            const pts = [...pointers.values()];
-
-            const distance = Math.hypot(
-                pts[0].x - pts[1].x,
-                pts[0].y - pts[1].y
-            );
-
-            currentScale = initialScale * (distance / initialDistance);
-
-            currentScale = Math.max(0.5, Math.min(currentScale, 3));
-
-            photo.style.transform = `scale(${currentScale})`;
-
-        }
+        photo.style.left = initialLeft + dx + "px";
+        photo.style.top = initialTop + dy + "px";
 
     }
 
-    function pointerUp(e){
+    function stopDrag(){
 
-        pointers.delete(e.pointerId);
+        photo.style.cursor = "grab";
+        photo.style.scale = "1";
+        photo.style.transition = "scale .2s";
 
-        if(photo.hasPointerCapture(e.pointerId)){
-            photo.releasePointerCapture(e.pointerId);
-        }
-
-        if(pointers.size === 0){
-
-            photo.style.cursor = "grab";
-            photo.style.transform = `scale(${currentScale})`;
-
-        }
+        document.removeEventListener("pointermove", drag);
+        document.removeEventListener("pointerup", stopDrag);
 
     }
 
